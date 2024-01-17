@@ -1,6 +1,7 @@
 package Navigator;
 
 import LinkedList.MyLinkedList;
+import LinkedList.MyArrayList;
 import LinkedList.MyList;
 
 import java.util.*;
@@ -54,7 +55,7 @@ public class MyLinkedListNavigator implements MyNavigator {
 
     @Override
     public Iterable<Route> searchRoutes(String startPoint, String endPoint) {
-        List<Route> sortedRouteList = new ArrayList<>();
+        MyArrayList<Route> sortedRouteList = new MyArrayList<>();
         // Добавьте все маршруты, удовлетворяющие условию startPoint и endPoint, в sortedRouteList
         for (Route route : routeLinkedList) {
             if (route.getStartPoint().equals(startPoint) && route.getEndPoint().equals(endPoint)) {
@@ -62,8 +63,7 @@ public class MyLinkedListNavigator implements MyNavigator {
             }
         }
         // Отсортируйте список sortedRouteList по определенному критерию (например, по времени или расстоянию)
-//        sortedRouteList.sort(new RouteDistanceComparator());
-        sortedRouteList.sort(Comparator.comparing(Route::getDistance)); // Пример сортировки по расстоянию
+        sortedRouteList.sort(new RouteDistanceComparator());
         sortedRouteList.sort(new RoutePopularityComparator());
         sortedRouteList.sort(new RouteFavoriteComparator());
         return sortedRouteList;
@@ -71,7 +71,7 @@ public class MyLinkedListNavigator implements MyNavigator {
 
     @Override
     public Iterable<Route> getFavoriteRoutes(String destinationPoint) {
-        List<Route> sortedRouteList = new ArrayList<>();
+        MyArrayList<Route> sortedRouteList = new MyArrayList<>();
         for (Route route : routeLinkedList) {
             if (route.getIsFavorite() && route.getEndPoint().equals(destinationPoint)) {
                 sortedRouteList.add(route);
@@ -84,15 +84,18 @@ public class MyLinkedListNavigator implements MyNavigator {
 
     @Override
     public Iterable<Route> getTopFiveRoutes() {
-        List<Route> sortedRouteList = new ArrayList<>();
+        MyArrayList<Route> sortedRouteList = new MyArrayList<>();
         for (Route route : routeLinkedList) {
             sortedRouteList.add(route);
         }
         sortedRouteList.sort(new RoutePopularityComparator());
-        sortedRouteList = sortedRouteList.subList(0,5);
-        sortedRouteList.sort(Comparator.comparing(Route::getDistance));
-        sortedRouteList.sort(Comparator.comparing(Route::getCountOFPoints));
-        return sortedRouteList;
+        MyArrayList<Route> resultSortedRouteList = new MyArrayList<>();
+        for (int i = 0; i<5; i++){
+            resultSortedRouteList.add(sortedRouteList.get(i));
+        }
+        resultSortedRouteList.sort(Comparator.comparing(Route::getDistance));
+        resultSortedRouteList.sort(Comparator.comparing(Route::getCountOFPoints));
+        return resultSortedRouteList;
     }
 
     @Override
@@ -100,5 +103,12 @@ public class MyLinkedListNavigator implements MyNavigator {
         for (Route r:routeLinkedList){
             System.out.println(r);
         }
+    }
+
+    public void changeFavoriteFLag(Route route){
+        if(route.getIsFavorite())
+            route.setFavorite(false);
+        else
+            route.setFavorite(true);
     }
 }

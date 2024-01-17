@@ -21,6 +21,7 @@ public class Main {
                 case 5->getAllRoutsBetween();
                 case 6->getAllFavoriteRouts();
                 case 7->getTopFiveRoutes();
+                case 8->changeFavoriteFLag();
                 default -> {
                     if (action == 8){
                         System.out.println("Выход из программы.");
@@ -29,7 +30,7 @@ public class Main {
                     }
                 }
             }
-            if (action==8) break;
+            if (action==9) break;
         }
     }
     public static void printActions(){
@@ -42,7 +43,8 @@ public class Main {
                 "Получить все маршруты от пункта до пункта- 5\n" +
                 "Получить избранные маршруты до пункта назначения - 6\n" +
                 "Получить топ 5 маршрутов - 7\n" +
-                "Выход - 8");
+                "Изменить флаг \"избранный\" маршрут - 8\n"+
+                "Выход - 9");
     }
     private static String generateId(){
         int leftLimit = 48; // цифра '0'
@@ -126,6 +128,12 @@ public class Main {
             System.out.println("Ошибка удаления");
             System.out.println(e.getMessage());
         }
+    }
+    public static void changeFavoriteFLag(){
+        System.out.println("Введите id маршрута, у которого надо изменить флаг:");
+        String id = scanner.next();
+        Route route = navigator.getRoute(id);
+        navigator.changeFavoriteFLag(route);
     }
     public static void getRouteById(){
         System.out.println("Чтобы получить маршрут, введите его id:\n" +

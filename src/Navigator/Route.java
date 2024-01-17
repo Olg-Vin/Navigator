@@ -2,8 +2,6 @@ package Navigator;
 
 import java.util.*;
 
-// route - маршрут
-
 public class Route implements Comparable<Route>{
     private String id; // уникальный идентификатор
     private Double distance; // видимо длинная маршрута в единицах измерения
@@ -68,7 +66,7 @@ public class Route implements Comparable<Route>{
     private void setPopularity(Integer popularity) {
         this.popularity = popularity;
     }
-    private void setFavorite(boolean favorite) {
+    public void setFavorite(boolean favorite) {
         isFavorite = favorite;
     }
     private void setLocationPoints(List<String> locationPoints) {
@@ -104,7 +102,7 @@ public class Route implements Comparable<Route>{
                 Objects.equals(locationPoints, route.locationPoints)) ||
 
                 (Objects.equals(getStartPoint(), route.getStartPoint()) &&
-                        getCountOFPoints() == route.getCountOFPoints() &&
+                        getDistance() == route.getDistance() &&
                         Objects.equals(getEndPoint(), route.getEndPoint()));
     }
 
@@ -142,9 +140,10 @@ class RouteDistanceComparator implements Comparator<Route> {
     }
 }
 class RoutePopularityComparator implements Comparator<Route> {
-
     @Override
     public int compare(Route o1, Route o2) {
         return -(o1.getPopularity().compareTo(o2.getPopularity()));
     }
 }
+
+

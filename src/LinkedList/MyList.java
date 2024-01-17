@@ -12,4 +12,7 @@ public interface MyList<E> extends Iterable<E>{
     E remove(int index); // удаляет элемент по указанному индексу
     boolean remove(E element); // удаляет первое вхождение указанного элемента
     void clear(); // удаляет все элементы из списка
+    void sort(Comparator<? super E> c);
+
+//    MyList<E> subList(int fromIndex, int toIndex);
 }

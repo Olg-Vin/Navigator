@@ -4,8 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MyLinkedList<E>
-        implements MyList<E>, Iterable<E> {
+public class MyLinkedList<E> implements MyList<E>, Iterable<E> {
     int size = 0;
     Node<E> first;
     Node<E> last;
@@ -139,6 +138,11 @@ public class MyLinkedList<E>
         }
         first = last = null;
         size = 0;
+    }
+
+    @Override
+    public void sort(Comparator<? super E> c) {
+
     }
 
     public int indexOf(E element) {
